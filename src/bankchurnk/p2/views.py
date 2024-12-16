@@ -12,6 +12,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.model_selection import cross_validate
 from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.pipeline import make_pipeline
@@ -25,6 +26,8 @@ with open('rscv_gbc_model.pkl', 'rb') as f:
     gbc_model = pickle.load(f)
 
 # RDF
+with open('rscv_rdf_model.pkl', 'rb') as f:
+    rdf_model = pickle.load(f)
 
 # XGB
 
@@ -140,7 +143,7 @@ def rdf_predict(request):
             inner_data[12] = card_type_choice
             data = [inner_data]
             
-            pred = gbc_model.predict(data)
+            pred = rdf_model.predict(data)
             if pred[0] == 0:
                 pred_message = 'Stay'
             else:
